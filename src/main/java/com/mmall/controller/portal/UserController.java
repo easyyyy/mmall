@@ -37,4 +37,38 @@ public class UserController {
         }
         return response;
     }
+
+    @RequestMapping(value = "logout.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> logout(HttpSession session){
+        session.removeAttribute(Const.CURRENT_USER);
+        return ServerResponse.createBySuccess();
+    }
+
+    @RequestMapping(value = "register.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> register(User user){
+        return iUserService.register(user);
+    }
+
+    @RequestMapping(value = "check_valid.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> checkVaild(String str,String type){
+        return iUserService.checkValid(str,type);
+    }
+
+    @RequestMapping(value = "get_user_info.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<User> getUserInfo(HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user != null){
+            return ServerResponse.createBySuccess(user);
+        }
+        return ServerResponse.createByErrorMessage("用户未登录，无法访问当前用户信息");
+    }
+
+    public ServerResponse<String> forgetGetQuestion(String usname){
+
+    }
+
 }
