@@ -3,6 +3,7 @@ package com.mmall.util;
 import org.springframework.util.StringUtils;
 
 import java.security.MessageDigest;
+import java.util.Properties;
 
 
 public class MD5Util {
@@ -46,6 +47,7 @@ public class MD5Util {
     }
 
     public static String MD5EncodeUtf8(String origin) {
+        origin = origin+ PropertiesUtil.getProperty("password.salt","linhanyao");
 
         return MD5Encode(origin, "utf-8");
     }
